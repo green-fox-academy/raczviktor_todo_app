@@ -12,6 +12,10 @@ const input = args[3];
 
 
 
+const printArgumentError = () => console.log('\n    Nem támogatott argumentum!');
+
+
+
 const printUserGuide = () => {
 
     const userGuide = fs.readFileSync(appRoot + 'userGuide.txt')
@@ -54,11 +58,16 @@ const removeTodo = () => {
 
 
 
+
+
 switch (args[2]) {
+    case undefined: { printUserGuide(); break;}
     case '-l': { printList(); break; }
     case '-a': { addTodo(); break; }
     case '-r': { removeTodo(); break; }
     default: {
+        printArgumentError();
         printUserGuide();
     }
 }
+
