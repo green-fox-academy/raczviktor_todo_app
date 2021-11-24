@@ -19,8 +19,15 @@ const printList = () => {
 
     todoList = rawList.split('\n');
 
-    for (let i = 0; i < todoList.length; i++) {
-        console.log(`${(i+1)} - ${todoList[i]}`);
+    let filteredList = todoList.filter(content => content !== '');
+        
+      if (filteredList.length === 0) {
+        console.log('Nincs mára tennivalód! :)');
+      }
+   
+
+    for (let i = 0; i < filteredList.length; i++) {
+        console.log(`${(i+1)} - ${filteredList[i]}`);
     }
 };
 
