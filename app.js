@@ -1,12 +1,12 @@
-console.log(
-    `$ todo
+import fs from "fs";
 
-    Parancssori Todo applikáció
-    =============================
-    
-    Parancssori argumentumok:
-        -l   Kilistázza a feladatokat
-        -a   Új feladatot ad hozzá
-        -r   Eltávolít egy feladatot
-        -c   Teljesít egy feladatot`
-)
+const printInfo = () => {
+    const userGuide = fs.readFileSync('./userGuide.txt', {encoding:'utf8'});
+    // {encoding:'utf8', flag:'r'})
+        console.log(userGuide);
+};
+
+printInfo();
+
+
+
