@@ -1,4 +1,4 @@
-    
+
     Parancssori Todo applikáció
     =============================
     
@@ -7,3 +7,4 @@
         -a   Új feladatot ad hozzá
         -r   Eltávolít egy feladatot
         -c   Teljesít egy feladatot
+
