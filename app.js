@@ -41,30 +41,44 @@ const printList = () => {
 
 const addTodo = () => {
 
-    input ? fs.writeFileSync(appRoot + 'todos.txt', rawList + '\n' + input)
+    input ? fs.writeFileSync(appRoot + 'todos.txt', rawList + '\n' + '[ ] ' + input)
         : console.log('Nem lehetséges új feladat hozzáadása: nincs megadva a feladat!');
 };
 
 
 
 const removeTodo = () => {
+
     input === undefined ? console.log('Nem lehetséges az eltávolítás: nem adott meg indexet')
         : input > cleanList.length ? console.log('Nem lehetséges az eltávolítás: túlindexelési probléma adódott!')
             : input <= 0 ? console.log('Nem lehetséges az eltávolítás: alulindexelési probléma adódott!')
                 : isNaN(input) === true ? console.log('Nem lehetséges az eltávolítás: a megadott index nem szám!')
                     : cleanList.splice((input - 1), 1);
+
     fs.writeFileSync(appRoot + 'todos.txt', cleanList.join('\n'));
 };
 
 
 
+const doneTodo = () => {
+
+    input === undefined ? console.log('Nem lehetséges a feladat végrehajtása: nem adtál meg indexet!')
+        : input > cleanList.length ? console.log('Nem lehetséges a feladat végrehajtása: túlindexelési probléma adódott!')
+            : input <= 0 ? console.log('Nem lehetséges a feladat végrehajtása: alulindexelési probléma adódott!')
+                : isNaN(input) === true ? console.log('Nem lehetséges az eltávolítás: a megadott index nem szám!')
+                    : cleanList.splice((input - 1), 1, cleanList[input - 1].replace('[ ]', '[X]'));
+
+    fs.writeFileSync(appRoot + 'todos.txt', cleanList.join('\n'));
+}
+
 
 
 switch (args[2]) {
-    case undefined: { printUserGuide(); break;}
+    case undefined: { printUserGuide(); break; }
     case '-l': { printList(); break; }
     case '-a': { addTodo(); break; }
     case '-r': { removeTodo(); break; }
+    case '-c': { doneTodo(); break; }
     default: {
         printArgumentError();
         printUserGuide();
