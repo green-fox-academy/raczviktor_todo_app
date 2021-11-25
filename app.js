@@ -26,10 +26,10 @@ const errors = {
     deleteOverIndex: 'Nem lehetséges az eltávolítás: túlindexelési probléma adódott!',
     deleteUnderIndex: 'Nem lehetséges az eltávolítás: alulindexelési probléma adódott!',
     deleteNaNIndex: 'Nem lehetséges az eltávolítás: a megadott index nem szám!',
-    setDoneEmptyCall: 'Nem lehetséges a feladat végrehajtása: nem adtál meg indexet!',
-    setDoneOverIndex: 'Nem lehetséges a feladat végrehajtása: túlindexelési probléma adódott!',
-    setDoneUnderIndex: 'Nem lehetséges a feladat végrehajtása: alulindexelési probléma adódott!',
-    setDoneNaNIndex: 'Nem lehetséges az eltávolítás: a megadott index nem szám!',
+    markDoneEmptyCall: 'Nem lehetséges a feladat végrehajtása: nem adtál meg indexet!',
+    markDoneOverIndex: 'Nem lehetséges a feladat végrehajtása: túlindexelési probléma adódott!',
+    markDoneUnderIndex: 'Nem lehetséges a feladat végrehajtása: alulindexelési probléma adódott!',
+    markDoneNaNIndex: 'Nem lehetséges az eltávolítás: a megadott index nem szám!',
     unidentifedError: 'Ismeretlen hiba'
 };
 
@@ -96,16 +96,18 @@ const setRemoveError = () => {
 
 
 
-const setDone = () => {
+const markDone = () => {
 
-    input === undefined ? console.log(errors.setDoneEmptyCall)
-        : input > cleanList.length ? console.log(errors.setDoneOverIndex)
-            : input <= 0 ? console.log(errors.setDoneUnderIndex)
-                : isNaN(input) === true ? console.log(errors.setDoneNaNIndex)
+    input === undefined ? console.log(errors.markDoneEmptyCall)
+        : input > cleanList.length ? console.log(errors.markDoneOverIndex)
+            : input <= 0 ? console.log(errors.markDoneUnderIndex)
+                : isNaN(input) === true ? console.log(errors.markDoneNaNIndex)
                     : cleanList.splice((input - 1), 1, `${doneMark} ${cleanList[input - 1]}`);
 
     fs.writeFileSync(dataPath, cleanList.join('\n'));
 };
+
+
 
 
 
@@ -114,7 +116,7 @@ switch (order) {
     case '-l': { printList(); break; }
     case '-a': { addTodo(); break; }
     case '-r': { removeTodo(); break; }
-    case '-c': { setDone(); break; }
+    case '-c': { markDone(); break; }
     default: {
         printArgumentError();
         printUserGuide();
