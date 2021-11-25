@@ -1,4 +1,3 @@
-
-[ ] Kutyát sétáltatni
-[ ] Tejet venni
-[ ] Megcsinálni a leckét
+Kutyát sétáltatni
+Tejet venni
+[X] Megcsinálni a leckét

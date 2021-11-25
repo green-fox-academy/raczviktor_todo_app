@@ -2,17 +2,38 @@ import fs from "fs";
 
 const args = process.argv;
 
-const appRoot = args[1].slice(0, -6);
-
-const rawList = fs.readFileSync(appRoot + 'todos.txt').toString();
-
-const cleanList = rawList.split('\n').filter(content => content !== '');
+const order = args[2];
 
 const input = args[3];
 
+const appRoot = args[1].slice(0, -6);
+
+const dataPath = (args[1].slice(0, -6) + 'todos.txt');
+
+const rawList = fs.readFileSync(dataPath).toString();
+
+const cleanList = rawList.split('\n').filter(content => content !== '');
+
+const doneMark = '[X]';
+
+const todoMark = '[ ]';
+
+const errors = {
+    argumentError: '\n    Nem támogatott argumentum!',
+    listEmptyCall: 'Nincs mára tennivalód! :)',
+    addEmptyCall: 'Nem lehetséges új feladat hozzáadása: nincs megadva a feladat!',
+    deleteEmptyCall: 'Nem lehetséges az eltávolítás: nem adott meg indexet',
+    deleteOverIndex: 'Nem lehetséges az eltávolítás: túlindexelési probléma adódott!',
+    deleteUnderIndex: 'Nem lehetséges az eltávolítás: alulindexelési probléma adódott!',
+    deleteNaNIndex: 'Nem lehetséges az eltávolítás: a megadott index nem szám!',
+    setDoneEmptyCall: 'Nem lehetséges a feladat végrehajtása: nem adtál meg indexet!',
+    setDoneOverIndex: 'Nem lehetséges a feladat végrehajtása: túlindexelési probléma adódott!',
+    setDoneUnderIndex: 'Nem lehetséges a feladat végrehajtása: alulindexelési probléma adódott!',
+    setDoneNaNIndex: 'Nem lehetséges az eltávolítás: a megadott index nem szám!'
+};
 
 
-const printArgumentError = () => console.log('\n    Nem támogatott argumentum!');
+const printArgumentError = () => console.log(errors.argumentError);
 
 
 
@@ -28,57 +49,61 @@ const printUserGuide = () => {
 
 const printList = () => {
 
-    if (cleanList.length === 0) {
-        console.log('Nincs mára tennivalód! :)');
-    }
+    cleanList.length === 0 ? console.log(errors.listEmptyCall)
+        : markTodo();
+};
 
-    for (let i = 0; i < cleanList.length; i++) {
-        console.log(`${(i + 1)} - ${cleanList[i]}`);
-    }
+
+
+const markTodo = () => {
+    cleanList.forEach((element, i) => { element.includes(doneMark)
+        ? console.log(i + 1 + ' - ' + element)
+        : console.log(i + 1 + ` - ${todoMark} ` + element);
+    });
 };
 
 
 
 const addTodo = () => {
 
-    input ? fs.writeFileSync(appRoot + 'todos.txt', rawList + '\n' + '[ ] ' + input)
-        : console.log('Nem lehetséges új feladat hozzáadása: nincs megadva a feladat!');
+    input ? fs.writeFileSync(dataPath, rawList + '\n' + input)
+        : console.log(errors.addEmptyCall);
 };
 
 
 
 const removeTodo = () => {
 
-    input === undefined ? console.log('Nem lehetséges az eltávolítás: nem adott meg indexet')
-        : input > cleanList.length ? console.log('Nem lehetséges az eltávolítás: túlindexelési probléma adódott!')
-            : input <= 0 ? console.log('Nem lehetséges az eltávolítás: alulindexelési probléma adódott!')
-                : isNaN(input) === true ? console.log('Nem lehetséges az eltávolítás: a megadott index nem szám!')
+    input === undefined ? console.log(errors.deleteEmptyCall)
+        : input > cleanList.length ? console.log(errors.deleteOverIndex)
+            : input <= 0 ? console.log(errors.deleteUnderIndex)
+                : isNaN(input) === true ? console.log(errors.deleteNaNIndex)
                     : cleanList.splice((input - 1), 1);
 
-    fs.writeFileSync(appRoot + 'todos.txt', cleanList.join('\n'));
+    fs.writeFileSync(dataPath, cleanList.join('\n'));
 };
 
 
 
-const doneTodo = () => {
+const setDone = () => {
 
-    input === undefined ? console.log('Nem lehetséges a feladat végrehajtása: nem adtál meg indexet!')
-        : input > cleanList.length ? console.log('Nem lehetséges a feladat végrehajtása: túlindexelési probléma adódott!')
-            : input <= 0 ? console.log('Nem lehetséges a feladat végrehajtása: alulindexelési probléma adódott!')
-                : isNaN(input) === true ? console.log('Nem lehetséges az eltávolítás: a megadott index nem szám!')
-                    : cleanList.splice((input - 1), 1, cleanList[input - 1].replace('[ ]', '[X]'));
+    input === undefined ? console.log(errors.setDoneEmptyCall)
+        : input > cleanList.length ? console.log(errors.setDoneOverIndex)
+            : input <= 0 ? console.log(errors.setDoneUnderIndex)
+                : isNaN(input) === true ? console.log(errors.setDoneNaNIndex)
+                    : cleanList.splice((input - 1), 1, `${doneMark} ${cleanList[input - 1]}`);
 
-    fs.writeFileSync(appRoot + 'todos.txt', cleanList.join('\n'));
-}
+    fs.writeFileSync(dataPath, cleanList.join('\n'));
+};
 
 
 
-switch (args[2]) {
+switch (order) {
     case undefined: { printUserGuide(); break; }
     case '-l': { printList(); break; }
     case '-a': { addTodo(); break; }
     case '-r': { removeTodo(); break; }
-    case '-c': { doneTodo(); break; }
+    case '-c': { setDone(); break; }
     default: {
         printArgumentError();
         printUserGuide();
