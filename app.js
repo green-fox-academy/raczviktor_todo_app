@@ -29,7 +29,8 @@ const errors = {
     setDoneEmptyCall: 'Nem lehetséges a feladat végrehajtása: nem adtál meg indexet!',
     setDoneOverIndex: 'Nem lehetséges a feladat végrehajtása: túlindexelési probléma adódott!',
     setDoneUnderIndex: 'Nem lehetséges a feladat végrehajtása: alulindexelési probléma adódott!',
-    setDoneNaNIndex: 'Nem lehetséges az eltávolítás: a megadott index nem szám!'
+    setDoneNaNIndex: 'Nem lehetséges az eltávolítás: a megadott index nem szám!',
+    unidentifedError: 'Ismeretlen hiba'
 };
 
 
@@ -56,9 +57,10 @@ const printList = () => {
 
 
 const markTodo = () => {
-    cleanList.forEach((element, i) => { element.includes(doneMark)
-        ? console.log(i + 1 + ' - ' + element)
-        : console.log(i + 1 + ` - ${todoMark} ` + element);
+    cleanList.forEach((element, i) => {
+        element.includes(doneMark)
+            ? console.log(i + 1 + ' - ' + element)
+            : console.log(i + 1 + ` - ${todoMark} ` + element);
     });
 };
 
@@ -74,14 +76,23 @@ const addTodo = () => {
 
 const removeTodo = () => {
 
+    input < cleanList.length && input >= 0
+        ? cleanList.splice((input - 1), 1)
+        : setRemoveError();
+
+    fs.writeFileSync(dataPath, cleanList.join('\n'));
+};
+
+
+
+const setRemoveError = () => {
+
     input === undefined ? console.log(errors.deleteEmptyCall)
         : input > cleanList.length ? console.log(errors.deleteOverIndex)
             : input <= 0 ? console.log(errors.deleteUnderIndex)
                 : isNaN(input) === true ? console.log(errors.deleteNaNIndex)
-                    : cleanList.splice((input - 1), 1);
-
-    fs.writeFileSync(dataPath, cleanList.join('\n'));
-};
+                    : console.log(unidentifedError);
+}
 
 
 
