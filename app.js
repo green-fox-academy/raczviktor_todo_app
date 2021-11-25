@@ -98,16 +98,21 @@ const setRemoveError = () => {
 
 const markDone = () => {
 
-    input === undefined ? console.log(errors.markDoneEmptyCall)
-        : input > cleanList.length ? console.log(errors.markDoneOverIndex)
-            : input <= 0 ? console.log(errors.markDoneUnderIndex)
-                : isNaN(input) === true ? console.log(errors.markDoneNaNIndex)
-                    : cleanList.splice((input - 1), 1, `${doneMark} ${cleanList[input - 1]}`);
+    input < cleanList.length && input >= 0
+        ? cleanList.splice((input - 1), 1, `${doneMark} ${cleanList[input - 1]}`)
+        : setMarkDoneError();
 
     fs.writeFileSync(dataPath, cleanList.join('\n'));
 };
 
-
+const setMarkDoneError = () => {
+    
+    input === undefined ? console.log(errors.markDoneEmptyCall)
+        : input > cleanList.length ? console.log(errors.markDoneOverIndex)
+            : input <= 0 ? console.log(errors.markDoneUnderIndex)
+                : isNaN(input) === true ? console.log(errors.markDoneNaNIndex)
+                    : console.log(unidentifedError);
+}
 
 
 

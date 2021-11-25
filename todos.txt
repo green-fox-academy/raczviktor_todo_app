@@ -1,3 +1,3 @@
 Kutyát sétáltatni
-Tejet venni
+[X] Tejet venni
 [X] Megcsinálni a leckét
