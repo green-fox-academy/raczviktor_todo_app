@@ -30,6 +30,7 @@ export class Error {
                 : input <= 0 ? this.errorMessage = this.errors.deleteUnderIndex
                     : isNaN(input) === true ? this.errorMessage = this.errors.deleteNaNIndex
                         : this.errorMessage = unidentifedError;
+
         console.log(this.errorMessage);
     };
 
@@ -40,6 +41,7 @@ export class Error {
                 : input <= 0 ? this.errorMessage = this.errors.markDoneUnderIndex
                     : isNaN(input) === true ? this.errorMessage = this.errors.markDoneNaNIndex
                         : this.errorMessage = unidentifedError;
+                        
         console.log(this.errorMessage);
     }
 };

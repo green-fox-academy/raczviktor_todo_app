@@ -32,7 +32,7 @@ const printUserGuide = () => {
 
 const printList = () => {
 
-    cleanList.length === 0 ? console.log(errors.listEmptyCall)
+    cleanList.length === 0 ? console.log(Error.errors.listEmptyCall)
         : markTodo();
 };
 
@@ -47,11 +47,10 @@ const markTodo = () => {
 };
 
 
-
 const addTodo = () => {
 
     input ? fs.writeFileSync(dataPath, rawList + '\n' + input)
-        : console.log(errors.addEmptyCall);
+        : console.log(Error.errors.addEmptyCall);
 };
 
 
@@ -71,7 +70,6 @@ const markDone = () => {
 
     input < cleanList.length && input >= 0
         ? cleanList.splice((input - 1), 1, `${doneMark} ${cleanList[input - 1]}`)
-        //May
         : Error.setMarkDoneError(input);
 
     fs.writeFileSync(dataPath, cleanList.join('\n'));
