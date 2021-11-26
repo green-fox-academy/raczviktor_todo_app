@@ -3,13 +3,13 @@ import { Error } from "./Error.mjs";
 
 const args = process.argv;
 
+const readMePath = args[1].slice(0, -7) + 'README.md';
+
+const dataPath = args[1].slice(0, -7) + 'todos.txt';
+
 const order = args[2];
 
 const input = args[3];
-
-const appRoot = args[1].slice(0, -7);
-
-const dataPath = (args[1].slice(0, -7) + 'todos.txt');
 
 const rawList = fs.readFileSync(dataPath).toString();
 
@@ -20,9 +20,10 @@ const doneMark = '[X]';
 const todoMark = '[ ]';
 
 
+
 const printUserGuide = () => {
 
-    const userGuide = fs.readFileSync(appRoot + 'userGuide.txt')
+    const userGuide = fs.readFileSync(readMePath)
         .toString();
 
     console.log(userGuide);

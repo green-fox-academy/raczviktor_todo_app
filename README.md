@@ -1,9 +1,5 @@
 # raczviktor_todo_app
 
-This is my first complete application.
-
-1, User Guide
-
     Parancssori Todo applikáció
     =============================
     
@@ -13,3 +9,4 @@ This is my first complete application.
         -r   Eltávolít egy feladatot
         -c   Teljesít egy feladatot
 
+r
