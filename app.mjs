@@ -3,8 +3,6 @@ import { Error } from "./Error.mjs";
 
 const args = process.argv;
 
-const readMePath = args[1].slice(0, -7) + 'README.md';
-
 const dataPath = args[1].slice(0, -7) + 'todos.txt';
 
 const order = args[2];
@@ -23,6 +21,7 @@ const todoMark = '[ ]';
 
 const printUserGuide = () => {
 
+    const readMePath = args[1].slice(0, -7) + 'README.md';
     const userGuide = fs.readFileSync(readMePath)
         .toString();
 
@@ -34,18 +33,9 @@ const printUserGuide = () => {
 const printList = () => {
 
     cleanList.length === 0 ? console.log(Error.errors.listEmptyCall)
-        : markTodo();
+        : markTodo()
 };
 
-
-
-const markTodo = () => {
-    cleanList.forEach((element, i) => {
-        element.includes(doneMark)
-            ? console.log(i + 1 + ' - ' + element)
-            : console.log(i + 1 + ` - ${todoMark} ` + element);
-    });
-};
 
 
 const addTodo = () => {
@@ -60,18 +50,28 @@ const removeTodo = () => {
 
     input < cleanList.length && input >= 0
         ? cleanList.splice((input - 1), 1)
-        : Error.setRemoveError(input);
+        : Error.setRemoveError(input, cleanList);
 
     fs.writeFileSync(dataPath, cleanList.join('\n'));
 };
 
 
 
+const markTodo = () => {
+
+
+    cleanList.forEach((element, i) => {
+        element.includes(doneMark)
+            ? console.log(i + 1 + ' - ' + element)
+            : console.log(i + 1 + ` - ${todoMark} ` + element);
+    })
+};
+
 const markDone = () => {
 
     input < cleanList.length && input >= 0
         ? cleanList.splice((input - 1), 1, `${doneMark} ${cleanList[input - 1]}`)
-        : Error.setMarkDoneError(input);
+        : Error.setMarkDoneError(input, cleanList);
 
     fs.writeFileSync(dataPath, cleanList.join('\n'));
 };

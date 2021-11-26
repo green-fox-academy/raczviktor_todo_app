@@ -23,7 +23,7 @@ export class Error {
 
 
 
-    static setRemoveError = (input) => {
+    static setRemoveError = (input, cleanList) => {
 
         input === undefined ? this.errorMessage = this.errors.deleteEmptyCall
             : input > cleanList.length ? this.errorMessage = this.errors.deleteOverIndex
@@ -34,7 +34,9 @@ export class Error {
         console.log(this.errorMessage);
     };
 
-    static setMarkDoneError = (input) => {
+
+    
+    static setMarkDoneError = (input, cleanList) => {
 
         input === undefined ? this.errorMessage = this.errors.markDoneEmptyCall
             : input > cleanList.length ? this.errorMessage = this.errors.markDoneOverIndex
