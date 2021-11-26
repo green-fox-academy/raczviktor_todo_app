@@ -9,4 +9,3 @@
         -r   Eltávolít egy feladatot
         -c   Teljesít egy feladatot
 
-r
