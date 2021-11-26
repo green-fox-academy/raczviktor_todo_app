@@ -1,4 +1,5 @@
 export class Error {
+
     static errors = {
         argumentError: '\n    Nem támogatott argumentum!',
         listEmptyCall: 'Nincs mára tennivalód! :)',
@@ -14,24 +15,31 @@ export class Error {
         unidentifedError: 'Ismeretlen hiba'
     };
 
+    static errorMessage = "";
+
+
+
     static printArgumentError = () => console.log(this.errors.argumentError);
+
+
 
     static setRemoveError = (input) => {
 
-        input === undefined ? console.log(this.errors.deleteEmptyCall)
-            : input > cleanList.length ? console.log(this.errors.deleteOverIndex)
-                : input <= 0 ? console.log(this.errors.deleteUnderIndex)
-                    : isNaN(input) === true ? console.log(this.errors.deleteNaNIndex)
-                        : console.log(unidentifedError);
+        input === undefined ? this.errorMessage = this.errors.deleteEmptyCall
+            : input > cleanList.length ? this.errorMessage = this.errors.deleteOverIndex
+                : input <= 0 ? this.errorMessage = this.errors.deleteUnderIndex
+                    : isNaN(input) === true ? this.errorMessage = this.errors.deleteNaNIndex
+                        : this.errorMessage = unidentifedError;
+        console.log(this.errorMessage);
     };
 
     static setMarkDoneError = (input) => {
 
-        input === undefined ? console.log(this.errors.markDoneEmptyCall)
-            : input > cleanList.length ? console.log(this.errors.markDoneOverIndex)
-                : input <= 0 ? console.log(this.errors.markDoneUnderIndex)
-                    : isNaN(input) === true ? console.log(this.errors.markDoneNaNIndex)
-                        : console.log(unidentifedError);
-                        return;
+        input === undefined ? this.errorMessage = this.errors.markDoneEmptyCall
+            : input > cleanList.length ? this.errorMessage = this.errors.markDoneOverIndex
+                : input <= 0 ? this.errorMessage = this.errors.markDoneUnderIndex
+                    : isNaN(input) === true ? this.errorMessage = this.errors.markDoneNaNIndex
+                        : this.errorMessage = unidentifedError;
+        console.log(this.errorMessage);
     }
 };
